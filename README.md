@@ -10,3 +10,5 @@ Practices included:
 - Blank Time
 
 Designed as a companion, not a teacher.# angel-inner-calm
+This app doesn’t teach you how to be better.
+It reminds you how to be here.
