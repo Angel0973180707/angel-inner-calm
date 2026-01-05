@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b3d2e" />
+  <title>清空練習｜Angel Inner Calm</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon/192.png">
+
+  <style>
+    :root{
+      --bg:#0b3d2e;
+      --card:#ffffff;
+      --text:#0f1f17;
+      --muted:#5b6b63;
+      --line:#e6eee9;
+      --soft:#f4faf7;
+      --accent:#1f7a5b;
+      --accent2:#0e5d44;
+      --danger:#b42318;
+      --shadow:0 12px 28px rgba(16,32,24,.16);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Arial;
+      background: linear-gradient(180deg, var(--bg), #062a1f);
+      color: #fff;
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 80px;}
+    header{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin:6px 0 14px;}
+    .brand{display:flex;flex-direction:column;gap:6px;}
+    .title{font-size:20px;font-weight:800;letter-spacing:.5px;line-height:1.1;}
+    .subtitle{color:rgba(255,255,255,.82);font-size:13px;line-height:1.4;}
+
+    .topActions{display:flex;gap:10px;align-items:center;}
+    .pill{
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      padding:10px 12px;border-radius:999px;
+      font-size:13px;cursor:pointer;user-select:none;
+      display:flex;gap:8px;align-items:center;
+      backdrop-filter: blur(10px);
+    }
+    .pill:active{ transform: translateY(1px); }
+
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;}
+    @media(min-width:860px){.grid{grid-template-columns:1.2fr .8fr;align-items:start;}}
+
+    .card{
+      background: var(--card); color: var(--text);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,.04);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--line);
+      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    }
+    .cardHeader h2{margin:0;font-size:15px;letter-spacing:.3px;}
+    .cardHeader .hint{color: var(--muted);font-size:12px;line-height:1.4;margin-top:4px;}
+    .cardBody{padding:14px;}
+    .muted{color: var(--muted);font-size:13px;line-height:1.55;}
+    .quote{
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      line-height: 1.6;
+      color: #123024;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+    .btn{
+      border:0;background: var(--accent);color:#fff;
+      padding:10px 12px;border-radius:12px;
+      cursor:pointer;font-size:14px;font-weight:650;
+      box-shadow: 0 10px 20px rgba(31,122,91,.25);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btnGhost{
+      background:#fff;color: var(--accent2);
+      border: 1px solid rgba(31,122,91,.24);
+      box-shadow:none;
+    }
+    .btnDanger{background: var(--danger);box-shadow: 0 10px 20px rgba(180,35,24,.18);}
+    .btnSmall{padding:9px 10px;font-size:13px;border-radius:11px;}
+    .tag{
+      font-size:12px;
+      background: rgba(31,122,91,.12);
+      color: var(--accent2);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,122,91,.2);
+    }
+    .divider{height:1px;background: var(--line);margin:12px 0;}
+
+    .practiceList{display:grid;gap:10px;margin-top:10px;}
+    .practiceItem{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff;}
+    .practiceTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+    .practiceTitle{font-weight:800;font-size:14px;margin:0;}
+    .practiceText{margin:8px 0 0;white-space:pre-line;line-height:1.65;font-size:14px;color:#102018;}
+
+    .statGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+    .stat{background: var(--soft);border:1px solid var(--line);border-radius:16px;padding:12px;}
+    .stat .k{color: var(--muted);font-size:12px;}
+    .stat .v{font-size:18px;font-weight:900;margin-top:2px;color:#0d2c21;}
+
+    .timerBox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;}
+    .timerBig{font-size:28px;font-weight:900;letter-spacing:1px;color:#0d2c21;}
+    select{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:14px;}
+
+    .toast{
+      position: fixed; left: 50%; transform: translateX(-50%);
+      bottom: 18px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(14px);
+      color:#fff; padding: 10px 12px; border-radius: 999px;
+      font-size: 13px;
+      opacity: 0; pointer-events:none;
+      transition: opacity .18s ease;
+      max-width: 92vw; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;
+    }
+    .toast.show{opacity:1;}
+
+    footer{margin-top:12px;color:rgba(255,255,255,.75);font-size:12px;line-height:1.5;padding:8px 2px;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="title">Angel Inner Calm</div>
+        <div class="subtitle">不急著解釋、不急著修正自己。先回來，陪自己一下。</div>
+      </div>
+      <div class="topActions">
+        <button class="pill" id="btnNudge" title="焦慮來時，按一下">🫧 穩一下</button>
+        <button class="pill" id="btnReset" title="清空本機紀錄">🧹 清空</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="cardHeader">
+          <div>
+            <h2>今天，就選一個小小的練習</h2>
+            <div class="hint">你不需要變好，你只需要「回來」：回到自己。</div>
+          </div>
+          <div class="row">
+            <span class="tag" id="todayTag">今日練習</span>
+            <button class="btn btnSmall btnGhost" id="btnShuffle">換一個</button>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <div class="quote" id="todayCard"></div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <button class="btn" id="btnStartToday">開始這個練習</button>
+            <button class="btn btnGhost" id="btnDoneToday">我完成了</button>
+          </div>
+
+          <div class="practiceList" id="practiceList"></div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="cardHeader">
+          <div>
+            <h2>你的穩定正在長出來</h2>
+            <div class="hint">不是靠用力，而是靠「願意停一下」。</div>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <div class="statGrid">
+            <div class="stat"><div class="k">今日完成</div><div class="v" id="statToday">0</div></div>
+            <div class="stat"><div class="k">連續天數</div><div class="v" id="statStreak">0</div></div>
+            <div class="stat"><div class="k">累積完成</div><div class="v" id="statTotal">0</div></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="timerBox">
+            <div class="row" style="justify-content:space-between; align-items:flex-end;">
+              <div>
+                <div style="font-weight:900; color:#0d2c21;">③ 空白時段（只是存在）</div>
+                <div class="muted">不學習、不成長、不修正自己。讓內在慢慢回穩。</div>
+              </div>
+              <select id="timerPreset" aria-label="選擇分鐘">
+                <option value="180">3 分鐘</option>
+                <option value="300" selected>5 分鐘</option>
+                <option value="600">10 分鐘</option>
+                <option value="900">15 分鐘</option>
+                <option value="1200">20 分鐘</option>
+              </select>
+            </div>
+
+            <div style="margin-top:10px;" class="timerBig" id="timerDisplay">05:00</div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn btnSmall" id="btnTimerStart">開始</button>
+              <button class="btn btnSmall btnGhost" id="btnTimerPause">暫停</button>
+              <button class="btn btnSmall btnGhost" id="btnTimerReset">重設</button>
+              <button class="btn btnSmall btnGhost" id="btnTimerDone">結束並打卡</button>
+            </div>
+          </div>
+
+          <footer>
+            小提醒：資料只存你的裝置，不上傳。<br>
+            如果你願意，把它加入手機桌面，會更容易在「焦慮上來那一刻」按下 🫧 穩一下。
+          </footer>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const PRACTICES = [
+      {
+        id: "noConclusion",
+        title: "① 無結論練習",
+        text: "每天選一個時刻，\n允許自己對一件事不下結論。\n只看見、只經驗，不評價。",
+        todayCard: "今天，挑一件事先不下結論。\n你只要看見它、經驗它。\n不急著判斷對錯，也不急著給答案。"
+      },
+      {
+        id: "thoughtIsThought",
+        title: "② 念頭即念頭",
+        text: "當焦慮升起時，\n輕聲對自己說：\n「這只是一個念頭，不是事實。」\n不對抗，只看它來、看它走。",
+        todayCard: "焦慮來的時候，你不用贏過它。\n你只要輕輕說：\n「這只是一個念頭，不是事實。」\n然後，看它來、看它走。"
+      },
+      {
+        id: "blankTime",
+        title: "③ 空白時段",
+        text: "每天留一段時間，\n不學習、不成長、不修正自己。\n只是存在。\n你會慢慢找回內在的穩定感。",
+        todayCard: "今天，留一段「不用變好」的時間。\n不修正、不努力、不解釋。\n你只是存在。\n你會慢慢回到穩定。"
+      }
+    ];
+
+    const NUDGES = [
+      "你沒有走歪，只是有點累了。先呼一口氣。",
+      "先不解釋。先把心放回身體裡。",
+      "你可以不用立刻回應世界，先回來陪自己。",
+      "焦慮不是命令，它只是一個訊號。",
+      "你不需要變得更好，你只需要更靠近自己。",
+      "把注意力放到腳底：踩穩。就好。",
+      "給自己一個小小的空白：現在先不要結論。"
+    ];
+
+    const KEY = "angel_inner_calm_v1";
+    const todayKey = () => new Date().toISOString().slice(0,10);
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(KEY);
+        if(!raw) return { today: todayKey(), todayDone:{}, total:0, streak:0, lastDoneDate:null, pickedTodayId:null };
+        return JSON.parse(raw);
+      }catch{
+        return { today: todayKey(), todayDone:{}, total:0, streak:0, lastDoneDate:null, pickedTodayId:null };
+      }
+    }
+    function saveState(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
+
+    function toast(msg){
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(()=>el.classList.remove("show"), 1800);
+    }
+
+    function pickRandomPracticeId(){
+      return PRACTICES[Math.floor(Math.random()*PRACTICES.length)].id;
+    }
+    function getPracticeById(id){
+      return PRACTICES.find(p=>p.id===id) || PRACTICES[0];
+    }
+    function isYesterday(dateStr, todayStr){
+      const d1 = new Date(dateStr);
+      const d2 = new Date(todayStr);
+      const diff = Math.round((d2 - d1) / (1000*60*60*24));
+      return diff === 1;
+    }
+    function rolloverIfNeeded(state){
+      const t = todayKey();
+      if(state.today !== t){
+        state.today = t;
+        state.todayDone = {};
+        state.pickedTodayId = null;
+      }
+      return state;
+    }
+
+    function render(state){
+      const todayCount = Object.keys(state.todayDone||{}).length;
+      document.getElementById("statToday").textContent = String(todayCount);
+      document.getElementById("statTotal").textContent = String(state.total||0);
+      document.getElementById("statStreak").textContent = String(state.streak||0);
+
+      if(!state.pickedTodayId){
+        state.pickedTodayId = pickRandomPracticeId();
+        saveState(state);
+      }
+      const p = getPracticeById(state.pickedTodayId);
+      document.getElementById("todayCard").textContent = p.todayCard;
+
+      const doneToday = !!state.todayDone?.[p.id];
+      document.getElementById("todayTag").textContent = doneToday ? "今日練習｜已完成 ✅" : "今日練習";
+
+      const list = document.getElementById("practiceList");
+      list.innerHTML = "";
+      PRACTICES.forEach(pr=>{
+        const done = !!state.todayDone?.[pr.id];
+        const item = document.createElement("div");
+        item.className = "practiceItem";
+        item.innerHTML = `
+          <div class="practiceTop">
+            <div>
+              <p class="practiceTitle">${pr.title}</p>
+              <div class="muted" style="margin-top:4px;">${done ? "✅ 今天你已經陪自己做過了" : "今天你也可以選它"}</div>
+            </div>
+            <div class="row" style="justify-content:flex-end;">
+              <button class="btn btnSmall ${done ? "btnGhost" : ""}" data-act="start" data-id="${pr.id}">${done ? "再做一次" : "開始"}</button>
+              <button class="btn btnSmall btnGhost" data-act="done" data-id="${pr.id}">完成</button>
+            </div>
+          </div>
+          <p class="practiceText">${pr.text}</p>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function markDone(state, practiceId){
+      state = rolloverIfNeeded(state);
+      if(!state.todayDone) state.todayDone = {};
+      const already = !!state.todayDone[practiceId];
+
+      if(!already){
+        state.todayDone[practiceId] = true;
+        state.total = (state.total||0) + 1;
+
+        const t = todayKey();
+        if(state.lastDoneDate === t){
+          // same day, keep streak
+        }else if(state.lastDoneDate && isYesterday(state.lastDoneDate, t)){
+          state.streak = (state.streak||0) + 1;
+        }else{
+          state.streak = 1;
+        }
+        state.lastDoneDate = t;
+      }
+
+      saveState(state);
+      render(state);
+      toast(already ? "你今天已經打卡過了，願意再陪自己一次也很好。" : "完成了。你正在把心帶回來。");
+    }
+
+    let state = rolloverIfNeeded(loadState());
+    render(state);
+
+    document.getElementById("btnShuffle").addEventListener("click", ()=>{
+      state.pickedTodayId = pickRandomPracticeId();
+      saveState(state);
+      render(state);
+      toast("換一個也可以。今天怎麼舒服就怎麼來。");
+    });
+
+    document.getElementById("btnStartToday").addEventListener("click", ()=>{
+      const p = getPracticeById(state.pickedTodayId);
+      toast(`就從「${p.title.replace(/^① |^② |^③ /,"")}」開始。慢慢來。`);
+    });
+
+    document.getElementById("btnDoneToday").addEventListener("click", ()=>{
+      markDone(state, state.pickedTodayId);
+      state = loadState();
+    });
+
+    document.getElementById("practiceList").addEventListener("click", (e)=>{
+      const btn = e.target.closest("button");
+      if(!btn) return;
+      const act = btn.dataset.act;
+      const id = btn.dataset.id;
+      if(!act || !id) return;
+
+      if(act === "start"){
+        const pr = getPracticeById(id);
+        toast(`好，先做「${pr.title.replace(/^① |^② |^③ /,"")}」。你不用做完美，只要做。`);
+        state.pickedTodayId = id;
+        saveState(state);
+        render(state);
+      }else if(act === "done"){
+        markDone(state, id);
+        state = loadState();
+      }
+    });
+
+    document.getElementById("btnNudge").addEventListener("click", ()=>{
+      toast(NUDGES[Math.floor(Math.random()*NUDGES.length)]);
+    });
+
+    document.getElementById("btnReset").addEventListener("click", ()=>{
+      if(confirm("要清空本機紀錄嗎？（連續天數與完成數會歸零）")){
+        localStorage.removeItem(KEY);
+        state = rolloverIfNeeded(loadState());
+        render(state);
+        toast("清空了。從現在開始，也很好。");
+      }
+    });
+
+    // Timer for Blank Time
+    let timer = { totalSec: 300, leftSec: 300, t: null, running: false };
+
+    function fmt(sec){
+      const m = Math.floor(sec/60), s = sec%60;
+      return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+    }
+    function setTimerDisplay(){ document.getElementById("timerDisplay").textContent = fmt(timer.leftSec); }
+    function stopTimer(){ timer.running=false; if(timer.t){clearInterval(timer.t); timer.t=null;} }
+
+    function setPreset(){
+      const v = parseInt(document.getElementById("timerPreset").value,10);
+      timer.totalSec = v; timer.leftSec = v;
+      setTimerDisplay();
+    }
+
+    document.getElementById("timerPreset").addEventListener("change", ()=>{
+      stopTimer(); setPreset(); toast("好，給自己一段剛剛好的空白。");
+    });
+
+    function tick(){
+      if(timer.leftSec <= 0){
+        stopTimer();
+        timer.leftSec = 0;
+        setTimerDisplay();
+        toast("時間到。你已經做得很好了。");
+        if(navigator.vibrate) navigator.vibrate([80,40,80]);
+        return;
+      }
+      timer.leftSec -= 1;
+      setTimerDisplay();
+    }
+    function startTimer(){
+      if(timer.running) return;
+      timer.running = true;
+      timer.t = setInterval(tick, 1000);
+    }
+
+    document.getElementById("btnTimerStart").addEventListener("click", ()=>{ startTimer(); toast("開始。你只需要存在。"); });
+    document.getElementById("btnTimerPause").addEventListener("click", ()=>{ stopTimer(); toast("暫停也沒關係。你一直都在路上。"); });
+    document.getElementById("btnTimerReset").addEventListener("click", ()=>{
+      stopTimer(); timer.leftSec = timer.totalSec; setTimerDisplay(); toast("重設好了。慢慢來。");
+    });
+    document.getElementById("btnTimerDone").addEventListener("click", ()=>{
+      stopTimer();
+      markDone(state, "blankTime");
+      state = loadState();
+      toast("謝謝你願意留白。內在會記得這份安靜。");
+    });
+
+    setPreset();
+
+    // PWA register
+    if("serviceWorker" in navigator){
+      window.addEventListener("load", ()=>{
+        navigator.serviceWorker.register("./sw.js").catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
